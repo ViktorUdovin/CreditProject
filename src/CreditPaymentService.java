@@ -1,29 +1,10 @@
 public class CreditPaymentService {
 
-    public long calculate(int term, int credit) {
-
-        int oneyear = 12;
-        int twoyears = 24;
-        int threeyears = 36;
-        double oneyearkoeff = 0.087911;
-        double twoyearskoeff = 0.046140;
-        double threeyearskoeff = 0.032262;
-        double mainkoff = 0;
-
-
-        if (term == oneyear) {
-            mainkoff = oneyearkoeff;
-        }
-        if (term == twoyears) {
-            mainkoff = twoyearskoeff;
-        }
-        if (term == threeyears) {
-            mainkoff = threeyearskoeff;
-        }
-        double monthpayment = credit * mainkoff;
+    public long calculate(int term, int credit, double percent) {
+        double monthpercent = percent / 12 / 100;
+        double koefficient = (monthpercent * Math.pow(1 + monthpercent, term)) / (Math.pow(1 + monthpercent, term) - 1);
+        double monthpayment = koefficient * credit;
 
         return (int) monthpayment;
-
-
     }
 }
